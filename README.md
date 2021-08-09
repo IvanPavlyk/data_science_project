@@ -4,6 +4,8 @@ Required libraries:
     - names
     - scipy
     - matplotlib
+    - pandas
+    - numpy
 1. At first we take initial files and we want to extract useful info
 and prepare for transformation.
 2. First, run the 1_extract.py like this:
