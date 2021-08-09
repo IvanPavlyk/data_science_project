@@ -24,6 +24,7 @@ def main():
     df['velocity'] = df.apply(lambda row : integration([row['filtered'], row['filtered_shifted']]), axis = 1)
     #Shift values of velocity by 1 to get current and next values of velocities side by side
     df['velocity_shifted'] = df['velocity'].shift(-1).fillna(0)
+    df.loc[df.index%32 == 0, 'velocity_shifted'] = 0
     
     
     
@@ -32,6 +33,7 @@ def main():
     df = df.drop(['filtered_shifted', 'velocity_shifted'], axis=1)
     #Shift values of position by 1 to get current and next values of position side by side
     df['position_shifted'] = df['position'].shift(-1).fillna(0)
+    df.loc[df.index%32 == 0, 'position_shifted'] = 0
     
     #Calculate distance travelled between two adjacent points by passing the values to difference function
     df['distance'] = df.apply(lambda row : difference(row['position'], row['position_shifted']), axis = 1)
