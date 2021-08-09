@@ -8,9 +8,9 @@ Required libraries:
 and prepare for transformation.
 2. First, run the 1_extract.py like this:
     - python3 1_extract.py C:\Users\vpavl\CMPT353\project\data combined_data.csv
-The argv[2] in this case corresponds to the absolute path of the data folder,
-this one will be different for the person running this code, change it
-accordingly.
+    - The argv[2] in this case corresponds to the absolute path of the data folder,
+        this one will be different for the person running this code, change it
+        accordingly.
 3. Running 1_extract.py will produce combined_data.csv file which will serve
 as input in the next step.
 4. Second, run the 2_transform_load.py like this:
