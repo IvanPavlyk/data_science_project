@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import stats
@@ -95,7 +94,7 @@ def phone_pos_walking_speed(data):
 
     # Question: Does walking speed differentiate between gender?
     phone_pos_ttest = stats.f_oneway(ankle['velocity'], pocket['velocity'])
-    print("\nThe Student's t-distribution p-value for male vs female: ", phone_pos_ttest.pvalue)
+    print("\nThe Student's t-distribution p-value for phone-at-ankle vs phone-at-pocket: ", phone_pos_ttest.pvalue)
     if phone_pos_ttest.pvalue < 0.05:
         print("We CAN conclude that there is a difference in walking speed between phone-at-ankle vs phone-at-pocket.")
     else:
@@ -108,6 +107,7 @@ def main():
     gender_walking_speed(data)
     height_walking_speed(data)
     phone_pos_walking_speed(data)
+
 
 if __name__ == '__main__':
     main()
