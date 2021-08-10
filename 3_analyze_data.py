@@ -7,11 +7,11 @@ import sys
 
 def age_walking_speed(data):
     middle_aged = data[data['age'] > 40]
-    young_adults = data[(data['age'] < 40) & (data['age'] > 15)]
-    children = data[data['age'] < 15]
+    young_adults = data[(data['age'] < 40) & (data['age'] > 18)]
+    children = data[data['age'] < 18]
     print("\nMiddle_aged avg velocity: ", middle_aged['velocity'].mean())
-    print("\nYoung_adults avg velocity: ", young_adults['velocity'].mean())
-    print("\nChildren avg velocity: ", children['velocity'].mean())
+    print("Young_adults avg velocity: ", young_adults['velocity'].mean())
+    print("Children avg velocity: ", children['velocity'].mean())
 
     # Plot for different age groups
     plt.figure(figsize=(10,5))
@@ -40,7 +40,7 @@ def gender_walking_speed(data):
     # print(male)
     # print(female)
     print("\nMale avg velocity: ", male['velocity'].mean())
-    print("\nFemale avg velocity: ", female['velocity'].mean())
+    print("Female avg velocity: ", female['velocity'].mean())
 
     # Plot for male vs female
     plt.figure(figsize=(10,5))
@@ -78,13 +78,36 @@ def height_walking_speed(data):
         print("We CANNOT conclude that there is a difference in walking speed between people of different height.")
 
 
+def phone_pos_walking_speed(data):
+    ankle = data[data['collection type'] == 'ankle']
+    pocket = data[data['collection type'] == 'pocket']
+    print("\nPhone-at-ankle avg velocity: ", ankle['velocity'].mean())
+    print("Phone-in-pocket avg velocity: ", pocket['velocity'].mean())
+    # Plot for male vs female
+    plt.figure(figsize=(10,5))
+    plt.title("Walking Speed For Phone Position During Data Collection")
+    plt.scatter(ankle['time_stamp'], ankle['velocity'], color='blue', label='Phone-at-ankle')
+    plt.scatter(pocket['time_stamp'], pocket['velocity'], color='orange', label='Phone-in-pocket')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Walking Speed (cm/s)')
+    plt.legend()
+    plt.savefig("phone_pos_walking_speed.png")
+
+    # Question: Does walking speed differentiate between gender?
+    phone_pos_ttest = stats.f_oneway(ankle['velocity'], pocket['velocity'])
+    print("\nThe Student's t-distribution p-value for male vs female: ", phone_pos_ttest.pvalue)
+    if phone_pos_ttest.pvalue < 0.05:
+        print("We CAN conclude that there is a difference in walking speed between phone-at-ankle vs phone-at-pocket.")
+    else:
+        print("We CANNOT conclude that there is a difference in walking speed between phone-at-ankle vs phone-at-pocket.")
+
 
 def main():
     data = pd.read_csv(sys.argv[1])
     age_walking_speed(data)
     gender_walking_speed(data)
     height_walking_speed(data)
-
+    phone_pos_walking_speed(data)
 
 if __name__ == '__main__':
     main()
