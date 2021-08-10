@@ -25,7 +25,7 @@ def main():
     count = [0]
     for filename in all_files:
         attributes = filename.split("_")
-        attributes_gender = attributes[0].split("\\")
+        attributes_gender = attributes[0].split("/")
         attributes[0] = attributes_gender[len(attributes_gender) - 1]
         attributes[len(attributes) - 1] = attributes[len(attributes) - 1].strip('.csv')
         df = pd.read_csv(filename, index_col=None, header=0)

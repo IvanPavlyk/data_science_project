@@ -34,8 +34,8 @@ def age_walking_speed(data):
 
 
 def gender_walking_speed(data):
-    male = data[data['gender'] == 'data/male']
-    female = data[data['gender'] == 'data/female']
+    male = data[data['gender'] == 'male']
+    female = data[data['gender'] == 'female']
     print("\nMale avg Walking Speed: ", male['position_shifted'].mean())
     print("Female avg Walking Speed: ", female['position_shifted'].mean())
 
