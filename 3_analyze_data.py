@@ -43,7 +43,7 @@ def gender_walking_speed(data):
 
     # Plot for male vs female
     plt.figure(figsize=(10,5))
-    plt.title("Walking Speed For Different Age Groups")
+    plt.title("Walking Speed For Different Gender")
     plt.scatter(male['time_stamp'], male['velocity'], color='red', label='Male')
     plt.scatter(female['time_stamp'], female['velocity'], color='green', label='Female')
     plt.xlabel('Time (s)')
