@@ -42,7 +42,7 @@ def main():
         df['collection type'] = attributes[3]
         df['time_stamp'] = df.apply(lambda row: increment_count(count), axis = 1)
         low_passed = signal.filtfilt(b, a, df['atotal'])
-        df['filtered_atotal'] = low_passed
+        df['filtered'] = low_passed
         df = df.drop(['time'], axis=1)
         li.append(df)
 
@@ -54,7 +54,7 @@ def main():
         plt.xlabel('Time (s)')
         plt.ylabel('Acceleration (m/s^2)')
         plt.plot(li[i]['time_stamp'], li[i]['atotal'], 'b-', label='Before Butterworth filter  ')
-        plt.plot(li[i]['time_stamp'], li[i]['filtered_atotal'], 'r-', label = 'After Butterworth filter ')
+        plt.plot(li[i]['time_stamp'], li[i]['filtered'], 'r-', label = 'After Butterworth filter ')
         plt.legend()
         file_name = "{}_filtering.png".format(i)
         plt.savefig(file_name)
