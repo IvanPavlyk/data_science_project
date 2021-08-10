@@ -8,51 +8,49 @@ def age_walking_speed(data):
     middle_aged = data[data['age'] > 40]
     young_adults = data[(data['age'] < 40) & (data['age'] > 18)]
     children = data[data['age'] < 18]
-    print("\nMiddle_aged avg velocity: ", middle_aged['velocity'].mean())
-    print("Young_adults avg velocity: ", young_adults['velocity'].mean())
-    print("Children avg velocity: ", children['velocity'].mean())
+    print("\nMiddle_aged avg Walking Speed: ", middle_aged['position_shifted'].mean())
+    print("Young_adults avg Walking Speed: ", young_adults['position_shifted'].mean())
+    print("Children avg Walking Speed: ", children['position_shifted'].mean())
 
     # Plot for different age groups
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(10, 5))
     plt.title("Walking Speed For Different Age Groups")
-    plt.scatter(middle_aged['time_stamp'], middle_aged['velocity'], color = 'blue', label='Middle-Aged')
-    plt.scatter(young_adults['time_stamp'], young_adults['velocity'], color = 'red', label='Young Adult')
-    plt.scatter(children['time_stamp'], children['velocity'], color = 'green', label='Children')
+    plt.scatter(middle_aged['time_stamp'], middle_aged['position_shifted'], color='red', label='Middle-Aged')
+    plt.scatter(young_adults['time_stamp'], young_adults['position_shifted'], color='green', label='Young Adult')
+    plt.scatter(children['time_stamp'], children['position_shifted'], color='blue', label='Children')
     plt.xlabel('Time (s)')
     plt.ylabel('Walking Speed (cm/s)')
     plt.legend()
     plt.savefig("age_walking_speed.png")
 
     # Question: Does walking speed differentiate between age?
-    age_anova = stats.f_oneway(middle_aged['velocity'], young_adults['velocity'], children['velocity'])
+    age_anova = stats.f_oneway(middle_aged['position_shifted'], young_adults['position_shifted'],
+                               children['position_shifted'])
     print("\nThe anova p-value for age groups: ", age_anova.pvalue)
     if age_anova.pvalue < 0.05:
-        print("We CAN conclude that there is a difference in walking speed between male vs female.")
+        print("We CAN conclude that there is a difference in walking speed between different age groups.")
     else:
-        print("We CANNOT conclude that there is a difference in walking speed between male vs female.")
+        print("We CANNOT conclude that there is a difference in walking speed between different age groups.")
 
 
 def gender_walking_speed(data):
     male = data[data['gender'] == 'data/male']
     female = data[data['gender'] == 'data/female']
-    # check correct extracted groups
-    # print(male)
-    # print(female)
-    print("\nMale avg velocity: ", male['velocity'].mean())
-    print("Female avg velocity: ", female['velocity'].mean())
+    print("\nMale avg Walking Speed: ", male['position_shifted'].mean())
+    print("Female avg Walking Speed: ", female['position_shifted'].mean())
 
     # Plot for male vs female
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(10, 5))
     plt.title("Walking Speed For Different Gender")
-    plt.scatter(male['time_stamp'], male['velocity'], color='red', label='Male')
-    plt.scatter(female['time_stamp'], female['velocity'], color='green', label='Female')
+    plt.scatter(male['time_stamp'], male['position_shifted'], color='red', label='Male')
+    plt.scatter(female['time_stamp'], female['position_shifted'], color='green', label='Female')
     plt.xlabel('Time (s)')
     plt.ylabel('Walking Speed (cm/s)')
     plt.legend()
     plt.savefig("gender_walking_speed.png")
 
     # Question: Does walking speed differentiate between gender?
-    gender_ttest = stats.f_oneway(male['velocity'], female['velocity'])
+    gender_ttest = stats.f_oneway(male['position_shifted'], female['position_shifted'])
     print("\nThe Student's t-distribution p-value for male vs female: ", gender_ttest.pvalue)
     if gender_ttest.pvalue < 0.05:
         print("We CAN conclude that there is a difference in walking speed between male vs female.")
@@ -61,44 +59,60 @@ def gender_walking_speed(data):
 
 
 def height_walking_speed(data):
+    height_below_140 = data[data['height'] < 140]
+    height_140_to_170 = data[(data['height'] > 140) & (data['height'] < 170)]
+    height_over_170 = data[data['height'] > 170]
+    print("\nHeight_below_140cm Avg Walking Speed: ", height_below_140['position_shifted'].mean())
+    print("Height_140_to_170cm Avg Walking Speed: ", height_140_to_170['position_shifted'].mean())
+    print("Height_over_170cm Avg Walking Speed: ", height_over_170['position_shifted'].mean())
+
     # Plot for height
-    plt.figure(figsize=(10,5))
-    plt.title("Walking Speed For Different Height")
-    plt.scatter(data['height'], data['velocity'])
-    plt.xlabel('Height (m)')
+    plt.figure(figsize=(10, 5))
+    plt.title("Walking Speed For Different Height Groups")
+    plt.scatter(height_below_140['time_stamp'], height_below_140['position_shifted'], color='red',
+                label='Height: < 140cm')
+    plt.scatter(height_140_to_170['time_stamp'], height_140_to_170['position_shifted'], color='green',
+                label='Height: 140~170')
+    plt.scatter(height_over_170['time_stamp'], height_over_170['position_shifted'], color='blue',
+                label='Height: > 170cm')
+    plt.xlabel('Time (s)')
     plt.ylabel('Walking Speed (cm/s)')
+    plt.legend()
     plt.savefig("height_walking_speed.png")
 
-    reg = stats.linregress(data['height'], data['velocity'])
-    print("\nRegression p-value for height vs Walking Speed", reg.pvalue)
-    if reg.pvalue < 0.05:
-        print("We CAN conclude that there is a difference in walking speed between people of different height.")
+    # Question: Does walking speed differentiate between height?
+    height_anova = stats.f_oneway(height_below_140['position_shifted'], height_140_to_170['position_shifted'],
+                                  height_over_170['position_shifted'])
+    print("The anova p-value for height groups: ", height_anova.pvalue)
+    if height_anova.pvalue < 0.05:
+        print("We CAN conclude that there is a difference in walking speed between different height groups.")
     else:
-        print("We CANNOT conclude that there is a difference in walking speed between people of different height.")
+        print("We CANNOT conclude that there is a difference in walking speed between different height groups.")
 
 
 def phone_pos_walking_speed(data):
     ankle = data[data['collection type'] == 'ankle']
     pocket = data[data['collection type'] == 'pocket']
-    print("\nPhone-at-ankle avg velocity: ", ankle['velocity'].mean())
-    print("Phone-in-pocket avg velocity: ", pocket['velocity'].mean())
+    print("\nPhone-at-ankle avg Walking Speed: ", ankle['position_shifted'].mean())
+    print("Phone-in-pocket avg Walking Speed: ", pocket['position_shifted'].mean())
     # Plot for male vs female
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(10, 5))
     plt.title("Walking Speed For Phone Position During Data Collection")
-    plt.scatter(ankle['time_stamp'], ankle['velocity'], color='blue', label='Phone-at-ankle')
-    plt.scatter(pocket['time_stamp'], pocket['velocity'], color='orange', label='Phone-in-pocket')
+    plt.scatter(ankle['time_stamp'], ankle['position_shifted'], color='blue', label='Phone-at-ankle')
+    plt.scatter(pocket['time_stamp'], pocket['position_shifted'], color='orange', label='Phone-in-pocket')
     plt.xlabel('Time (s)')
     plt.ylabel('Walking Speed (cm/s)')
     plt.legend()
     plt.savefig("phone_pos_walking_speed.png")
 
     # Question: Does walking speed differentiate between gender?
-    phone_pos_ttest = stats.f_oneway(ankle['velocity'], pocket['velocity'])
-    print("\nThe Student's t-distribution p-value for phone-at-ankle vs phone-at-pocket: ", phone_pos_ttest.pvalue)
+    phone_pos_ttest = stats.f_oneway(ankle['position_shifted'], pocket['position_shifted'])
+    print("The Student's t-distribution p-value for phone-at-ankle vs phone-at-pocket: ", phone_pos_ttest.pvalue)
     if phone_pos_ttest.pvalue < 0.05:
         print("We CAN conclude that there is a difference in walking speed between phone-at-ankle vs phone-at-pocket.")
     else:
-        print("We CANNOT conclude that there is a difference in walking speed between phone-at-ankle vs phone-at-pocket.")
+        print(
+            "We CANNOT conclude that there is a difference in walking speed between phone-at-ankle vs phone-at-pocket.")
 
 
 def main():
