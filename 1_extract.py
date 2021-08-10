@@ -16,9 +16,7 @@ def increment_count(count):
 def main():
     li = [] # array of DataFrames
     path = sys.argv[1]
-    # path = 'C:\\Users\\vpavl\\CMPT353\\project\\data'
     output_file = sys.argv[2]
-    # output_file = "combined_data.csv"
     all_files = glob.glob(path + "/*.csv")
 
     # Extract all the data from files and add to an array of DataFrames
