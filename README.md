@@ -11,7 +11,7 @@ Required libraries:
     
 1. After downloading the project zip file, extract it into the folder of choice.
 
-2. Assuming the project directory structure is unaltered, please follow these execution commands in order:
+2. Assuming the project directory structure is unaltered, please go to the project root directory and follow these execution commands in order:
     1_extract.py:
 
         $ python3 1_extract.py data/ combined_data.csv
