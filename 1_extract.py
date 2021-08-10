@@ -49,7 +49,7 @@ def main():
 
     for i in range(0,2):
         plt.figure(figsize=(10,5))
-        title = "{}'s Walking Speed Over Time".format(li[i]['name'][0])
+        title = "{}'s Acceleration Over Time".format(li[i]['name'][0])
         plt.title(title)
         plt.xlabel('Time (s)')
         plt.ylabel('Acceleration (m/s^2)')
