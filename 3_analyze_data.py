@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import stats
 import sys
 
+
 def age_walking_speed(data):
     middle_aged = data[data['age'] > 40]
     young_adults = data[(data['age'] < 40) & (data['age'] > 15)]
@@ -59,10 +60,30 @@ def gender_walking_speed(data):
     else:
         print("We CANNOT conclude that there is a difference in walking speed between male vs female.")
 
+
+def height_walking_speed(data):
+    # Plot for height
+    plt.figure(figsize=(10,5))
+    plt.title("Walking Speed For Different Height")
+    plt.scatter(data['height'], data['velocity'])
+    plt.xlabel('Height (m)')
+    plt.ylabel('Walking Speed (cm/s)')
+    plt.savefig("height_walking_speed.png")
+
+    reg = stats.linregress(data['height'], data['velocity'])
+    print("\nRegression p-value for height vs Walking Speed", reg.pvalue)
+    if reg.pvalue < 0.05:
+        print("We CAN conclude that there is a difference in walking speed between people of different height.")
+    else:
+        print("We CANNOT conclude that there is a difference in walking speed between people of different height.")
+
+
+
 def main():
     data = pd.read_csv(sys.argv[1])
     age_walking_speed(data)
     gender_walking_speed(data)
+    height_walking_speed(data)
 
 
 if __name__ == '__main__':
