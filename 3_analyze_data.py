@@ -26,7 +26,7 @@ def age_walking_speed(data):
     # Question: Does walking speed differentiate between age?
     age_anova = stats.f_oneway(middle_aged['position_shifted'], young_adults['position_shifted'],
                                children['position_shifted'])
-    print("\nThe anova p-value for age groups: ", age_anova.pvalue)
+    print("The ANOVA p-value for age groups: ", age_anova.pvalue)
     if age_anova.pvalue < 0.05:
         print("We CAN conclude that there is a difference in walking speed between different age groups.")
     else:
@@ -51,7 +51,7 @@ def gender_walking_speed(data):
 
     # Question: Does walking speed differentiate between gender?
     gender_ttest = stats.f_oneway(male['position_shifted'], female['position_shifted'])
-    print("\nThe Student's t-distribution p-value for male vs female: ", gender_ttest.pvalue)
+    print("The Student's T-test p-value for male vs female: ", gender_ttest.pvalue)
     if gender_ttest.pvalue < 0.05:
         print("We CAN conclude that there is a difference in walking speed between male vs female.")
     else:
@@ -83,7 +83,7 @@ def height_walking_speed(data):
     # Question: Does walking speed differentiate between height?
     height_anova = stats.f_oneway(height_below_140['position_shifted'], height_140_to_170['position_shifted'],
                                   height_over_170['position_shifted'])
-    print("The anova p-value for height groups: ", height_anova.pvalue)
+    print("The ANOVA p-value for height groups: ", height_anova.pvalue)
     if height_anova.pvalue < 0.05:
         print("We CAN conclude that there is a difference in walking speed between different height groups.")
     else:
@@ -107,7 +107,7 @@ def phone_pos_walking_speed(data):
 
     # Question: Does walking speed differentiate between gender?
     phone_pos_ttest = stats.f_oneway(ankle['position_shifted'], pocket['position_shifted'])
-    print("The Student's t-distribution p-value for phone-at-ankle vs phone-at-pocket: ", phone_pos_ttest.pvalue)
+    print("The Student's T-test p-value for phone-at-ankle vs phone-at-pocket: ", phone_pos_ttest.pvalue)
     if phone_pos_ttest.pvalue < 0.05:
         print("We CAN conclude that there is a difference in walking speed between phone-at-ankle vs phone-at-pocket.")
     else:
