@@ -27,7 +27,7 @@ Required libraries:
              
     3_analyze_data.py:
     
-        $ python3 3_analyze_data.py tranformed_data
+        $ python3 3_analyze_data.py tranformed_data.csv
         
         Find meaningful relationships between age/height/gender/phone-position vs walking speed.
         Will produce a series of analysis and print the results.
